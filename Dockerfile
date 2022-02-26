@@ -6,7 +6,12 @@ WORKDIR /app
 # Download Go modules
 COPY go.mod .
 COPY go.sum .
+ENV GOPROXY https://goproxy.cn
 RUN go mod download
+
+# Set the time zone
+RUN ln -fs /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+RUN apt-get install -y tzdata
 
 # Copy the source code. Note the slash at the end, as explained in
 # https://docs.docker.com/engine/reference/builder/#copy
@@ -27,4 +32,4 @@ EXPOSE 8080
 #ENV HTTP_PORT=8081
 
 # Run
-CMD [ "/docker-gs-ping" ]
+ENTRYPOINT [ "/docker-gs-ping" ]
