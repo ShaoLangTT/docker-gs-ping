@@ -46,15 +46,15 @@ func main() {
 }
 
 func initStore() (*xorm.Engine, string, error) {
-	/*pgConnString := fmt.Sprintf("host=%s port=%s dbname=%s user=%s password=%s sslmode=disable",
+	pgConnString := fmt.Sprintf("host=%s port=%s dbname=%s user=%s password=%s sslmode=disable",
 		os.Getenv("PGHOST"),
 		os.Getenv("PGPORT"),
 		os.Getenv("PGDATABASE"),
 		os.Getenv("PGUSER"),
 		os.Getenv("PGPASSWORD"),
-	)*/
-	pgConnString := fmt.Sprintf("host=%s port=%s dbname=%s user=%s password=%s sslmode=disable", "124.223.101.122",
-		"5432", "postgres", "postgres", "123456")
+	)
+	/*	pgConnString := fmt.Sprintf("host=%s port=%s dbname=%s user=%s password=%s sslmode=disable", "124.223.101.122",
+		"5432", "postgres", "postgres", "123456")*/
 	engine, err := xorm.NewEngine("postgres", pgConnString)
 	if err != nil {
 		fmt.Println("NewEngine err:", err)
