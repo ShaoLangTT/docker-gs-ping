@@ -2,10 +2,10 @@ package main
 
 import (
 	"fmt"
-	"github.com/sirupsen/logrus"
-	"github.com/xormplus/xorm"
 	"net/http"
 	"os"
+	"time"
+	"xorm.io/xorm"
 
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
@@ -23,8 +23,12 @@ func main() {
 	e.GET("/", func(c echo.Context) error {
 		db, pgConnString, err := initStore()
 		if err != nil {
+			fmt.Println("err:", err)
 			return c.HTML(http.StatusOK, pgConnString+":"+err.Error())
 		}
+		m := make([]map[string]interface{}, 0)
+		db.Table("user").Find(&m)
+		fmt.Println("user:", m)
 		defer db.Close()
 		return c.HTML(http.StatusOK, pgConnString+"Hello, Docker! <3")
 	})
@@ -42,25 +46,31 @@ func main() {
 }
 
 func initStore() (*xorm.Engine, string, error) {
-	pgConnString := fmt.Sprintf("host=%s port=%s dbname=%s user=%s password=%s sslmode=disable",
+	/*pgConnString := fmt.Sprintf("host=%s port=%s dbname=%s user=%s password=%s sslmode=disable",
 		os.Getenv("PGHOST"),
 		os.Getenv("PGPORT"),
 		os.Getenv("PGDATABASE"),
 		os.Getenv("PGUSER"),
 		os.Getenv("PGPASSWORD"),
-	)
-	/*	pgConnString :=  fmt.Sprintf("host=%s port=%s dbname=%s user=%s password=%s sslmode=disable","124.223.101.122",
-		"5432","postgres","postgres","123456")*/
-	db, err := xorm.NewEngine("postgres", pgConnString)
-	fmt.Println("connect address", pgConnString)
+	)*/
+	pgConnString := fmt.Sprintf("host=%s port=%s dbname=%s user=%s password=%s sslmode=disable", "124.223.101.122",
+		"5432", "postgres", "postgres", "123456")
+	engine, err := xorm.NewEngine("postgres", pgConnString)
 	if err != nil {
-		logrus.Errorf("error creating db instance to %s: %s", pgConnString, err)
+		fmt.Println("NewEngine err:", err)
 		return nil, pgConnString, err
 	}
-	db.SetMaxOpenConns(500)
-	if err = db.Ping(); err != nil {
-		logrus.Errorf("error creating db connection to %s: %s", pgConnString, err)
+	setDB(engine)
+	if err := engine.Ping(); err != nil {
+		fmt.Println("Ping err:", err)
+		return nil, pgConnString, err
+
 	}
-	db.ShowSQL(true)
-	return db, pgConnString, err
+	return engine, pgConnString, err
+}
+
+func setDB(engine *xorm.Engine) {
+	//engine.SetMaxIdleConns(3)
+	//engine.SetMaxOpenConns(5)
+	engine.TZLocation, _ = time.LoadLocation("Asia/Shanghai")
 }
