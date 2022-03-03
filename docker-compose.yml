@@ -25,16 +25,16 @@ services: # 一个services 下面包含多个项目服务
         restart_policy:
           condition: on-failure # on-failure 在容器非正常退出时（退出状态非0），才会重启容器
 
-    postgres: # postgres 数据库
-      image: postgres:latest
-      container_name: my-pg
-      hostname: db
-      networks:
-        - mynet
-      ports:
-        - 5432:5432
-      volumes:
-        - roach:/var/lib/pg   # 已经存在的命名的数据卷。
+  postgres: # postgres 数据库
+    image: postgres:latest
+    container_name: my-pg
+    hostname: db
+    networks:
+      - mynet
+    ports:
+      - 5432:5432
+    volumes:
+      - roach:/var/lib/pg   # 已经存在的命名的数据卷。
      # command: start-single-node  # 覆盖容器启动后默认执行的命令
 
 volumes:  # 数据卷
