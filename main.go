@@ -21,6 +21,9 @@ func main() {
 	e.Use(middleware.Recover())
 
 	e.GET("/", func(c echo.Context) error {
+		if len(os.Getenv("URL")) > 0 {
+			fmt.Println("URL:", os.Getenv("URL"))
+		}
 		db, pgConnString, err := initStore()
 		if err != nil {
 			fmt.Println("err:", err)
