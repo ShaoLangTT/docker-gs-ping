@@ -8,7 +8,7 @@ services: # 一个services 下面包含多个项目服务
     build: # 使用当前目录下的Dockerfile进行构建,build也可以指定文件路径，Dockerfile的名字.
       context: ./
       dockerfile: Dockerfile
-      container_name: my_service # 容器名称
+      container_name: docker-gs-ping # 容器名称
       hostname: docker-gs-ping  # 设置hostname 在同一子网内，可以互相用hostname访问
       networks:
         - mynet
