@@ -9,7 +9,7 @@ services: # 一个services 下面包含多个项目服务
       context: ./
       dockerfile: Dockerfile
       container_name: docker-gs-ping # 容器名称
-      hostname: docker-gs-ping  # 设置hostname 在同一子网内，可以互相用hostname访问
+     # hostname: docker-gs-ping  # 设置hostname 在同一子网内，可以互相用hostname访问
       networks:
         - mynet
       ports:
