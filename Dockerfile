@@ -18,7 +18,7 @@ RUN apt-get install -y tzdata
 COPY *.go ./
 
 # Build
-RUN go build -o /docker-gs-ping
+RUN go build -o /docker-gs-ping:v3.0.1
 
 # This is for documentation purposes only.
 # To actually open the port, runtime parameters
@@ -32,4 +32,4 @@ EXPOSE 8080
 #ENV HTTP_PORT=8081
 
 # Run
-ENTRYPOINT [ "/docker-gs-ping" ]
+ENTRYPOINT [ "/docker-gs-ping:v3.0.1" ]
