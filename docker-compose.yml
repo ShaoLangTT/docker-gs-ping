@@ -10,7 +10,7 @@ services: # 一个services 下面包含多个项目服务
       dockerfile: Dockerfile
     container_name: docker-gs-ping # 容器名称
     hostname: docker-gs-ping  # 设置hostname 在同一子网内，可以互相用hostname访问
-    env_file:
+    env_file: # 从指定文件中获取环境变量
       - .env
     networks:
       - mynet
