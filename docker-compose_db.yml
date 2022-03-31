@@ -17,10 +17,10 @@ services: # 一个services 下面包含多个项目服务
     ports:
       - 8080:8080
     environment:
-      - PGUSER=${PGUSER:-postgres}
+      - PGUSER=${PGUSER}
       - PGPASSWORD=${PGPASSWORD:?database password not set}
-      - PGHOST=${PGHOST:-db}
-      - PGPORT=${PGPORT:-5432}
+      - PGHOST=${PGHOST}
+      - PGPORT=${PGPORT}
       - PGDATABASE=${PGDATABASE:-apaas}
     deploy: # 重新启动策略
       restart_policy:
