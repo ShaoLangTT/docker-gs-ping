@@ -9,6 +9,7 @@ services: # 一个services 下面包含多个项目服务
       context: .
       dockerfile: Dockerfile
     container_name: docker-gs-ping # 容器名称
+    image: docker-gs-ping:v1.0.0 # 指定生成镜像的 名称:标签
     hostname: docker-gs-ping  # 设置hostname 在同一子网内，可以互相用hostname访问
     env_file: # 从指定文件中获取环境变量
       - .env

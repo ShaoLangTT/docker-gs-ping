@@ -1,15 +1,14 @@
-# 在撰写文件中，我们将从定义模式版本开始。在大多数情况下，最好使用支持的最新版本  https://docs.docker.com/compose/compose-file/
+# 连接外网可以访问的数据库
 version: "3.8"
 
 services: # 一个services 下面包含多个项目服务
   web:  # 服务1
-    depends_on: # 服务启动依赖
-      - postgres
     build: # 使用当前目录下的Dockerfile进行构建,build也可以指定文件路径，Dockerfile的名字.
       context: .
       dockerfile: Dockerfile
     container_name: docker-gs-ping # 容器名称
     hostname: docker-gs-ping  # 设置hostname 在同一子网内，可以互相用hostname访问
+    image: docker-gs-ping:v1.0.0 # 指定生成镜像的 名称:标签
     env_file: # 从指定文件中获取环境变量
       - db.env
     networks:
@@ -28,4 +27,4 @@ services: # 一个services 下面包含多个项目服务
 
 networks:
   mynet:
-    driver: host  # 创建的网络时候需要指定driver（单一网络使用bridge，swarm集群使用overlay），而且driver内容不能省略
+    driver: bridge  # 创建的网络时候需要指定driver（单一网络使用bridge，swarm集群使用overlay），而且driver内容不能省略
