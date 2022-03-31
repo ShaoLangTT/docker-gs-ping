@@ -21,9 +21,6 @@ func main() {
 	e.Use(middleware.Recover())
 
 	e.GET("/", func(c echo.Context) error {
-		if len(os.Getenv("URL")) > 0 {
-			fmt.Println("URL:", os.Getenv("URL"))
-		}
 		db, pgConnString, err := initStore()
 		if err != nil {
 			fmt.Println("err:", err)
@@ -56,6 +53,7 @@ func initStore() (*xorm.Engine, string, error) {
 		os.Getenv("PGUSER"),
 		os.Getenv("PGPASSWORD"),
 	)
+	fmt.Println("pgConnString:", pgConnString)
 	/*	pgConnString := fmt.Sprintf("host=%s port=%s dbname=%s user=%s password=%s sslmode=disable", "124.223.101.122",
 		"5432", "postgres", "postgres", "123456")*/
 	engine, err := xorm.NewEngine("postgres", pgConnString)
