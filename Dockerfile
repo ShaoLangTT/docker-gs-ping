@@ -10,9 +10,9 @@ ENV GOPROXY https://goproxy.cn
 RUN go mod download
 
 # Set the time zone
-RUN ln -fs /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+# RUN ln -fs /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 # RUN apt-get install -y tzdata
-RUN apk install -y tzdata
+# RUN apk install -y tzdata
 
 # Copy the source code. Note the slash at the end, as explained in
 # https://docs.docker.com/engine/reference/builder/#copy
