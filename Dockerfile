@@ -9,10 +9,16 @@ COPY go.sum .
 ENV GOPROXY https://goproxy.cn
 RUN go mod download
 
-# Set the time zone
+# Set the time zone (alpine 的包管理器apk不是apt-get)
 # RUN ln -fs /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 # RUN apt-get install -y tzdata
-# RUN apk install -y tzdata
+
+# alpine 镜像时区问题完美解决方案
+RUN apk --update add tzdata && \
+    cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && \
+    echo "Asia/Shanghai" > /etc/timezone && \
+    apk del tzdata && \
+    rm -rf /var/cache/apk/*
 
 # Copy the source code. Note the slash at the end, as explained in
 # https://docs.docker.com/engine/reference/builder/#copy
