@@ -27,7 +27,7 @@ func main() {
 			return c.HTML(http.StatusOK, pgConnString+":"+err.Error())
 		}
 		m := make([]map[string]interface{}, 0)
-		db.Table("user").Find(&m)
+		db.Table("bg_user").Where("user_id= ?", "admin").Find(&m)
 		fmt.Println("user:", m)
 		defer db.Close()
 		return c.HTML(http.StatusOK, pgConnString+"Hello, Docker! <3")
