@@ -15,12 +15,13 @@ services: # 一个services 下面包含多个项目服务
       - mynet
     ports:
       - 8080:8080
-    environment: # 会一开始从 .dev 中找
+    environment: # 会一开始从 .dev 中找对应的环境变量值，如果没有找到会用户默认值
       - PGUSER=${PGUSER:-postgres}
       - PGPASSWORD=${PGPASSWORD:?database password not set}
       - PGHOST=${PGHOST:-db}
       - PGPORT=${PGPORT:-5432}
       - PGDATABASE=${PGDATABASE:-postgres} # 如果环境变量指定了值就读取指定的值，不然就获取默认的 postgres
+      - URL=${URL}
     deploy: # 重新启动策略
       restart_policy:
         condition: on-failure # on-failure 在容器非正常退出时（退出状态非0），才会重启容器
