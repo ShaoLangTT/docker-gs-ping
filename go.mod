@@ -12,7 +12,7 @@ require (
 	github.com/bmizerany/pq v0.0.0-20131128184720-da2b95e392c1 // indirect
 	github.com/bndr/gotabulate v1.1.2 // indirect
 	github.com/clbanning/mxj v1.8.4 // indirect
-	github.com/containerd/continuity v0.1.0 // indirectdocl
+	github.com/containerd/continuity v0.1.0 // indirectdocldocker
 	github.com/fatih/structs v1.1.0 // indirect
 	github.com/go-sql-driver/mysql v1.6.0 // indirect
 	github.com/konsorten/go-windows-terminal-sequences v1.0.3 // indirect
