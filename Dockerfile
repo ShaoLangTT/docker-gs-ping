@@ -6,7 +6,7 @@ WORKDIR /app
 # Download Go modules
 COPY go.mod .
 COPY go.sum .
-
+COPY db.env .
 ENV GOPROXY https://goproxy.cn
 RUN go mod download
 
