@@ -29,7 +29,7 @@ RUN GOOS=linux CGO_ENABLED=0 GOARCH=amd64 go build -ldflags="-s -w" -installsuff
 FROM scratch as prod
 
 # 在build阶段复制时区到
-COPY --from=build /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+# COPY --from=build /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 # 在build阶段复制可执行的go二进制文件app
 COPY --from=build /app/docker-gs-ping /
 
@@ -45,4 +45,4 @@ EXPOSE 8080
 #ENV HTTP_PORT=8081
 
 # Run
-ENTRYPOINT [ "/docker-gs-ping" ]
+CMD [ "/docker-gs-ping" ]
