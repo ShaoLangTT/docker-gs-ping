@@ -1,37 +1,32 @@
-FROM golang:alpine AS builder
+FROM golang:alpine
 
 # Set destination for COPY
 WORKDIR /app
 
-# 容器环境变量添加，会覆盖默认的变量值
-ENV GO111MODULE=on
+# Download Go modules
+COPY go.mod .
+COPY go.sum .
+
 ENV GOPROXY https://goproxy.cn
+RUN go mod download
 
 # Set the time zone (alpine 的包管理器apk不是apt-get)
 # RUN ln -fs /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 # RUN apt-get install -y tzdata
 
 # alpine 镜像时区问题完美解决方案
-# RUN apk --update add tzdata && \
-    #cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && \
-   # echo "Asia/Shanghai" > /etc/timezone && \
-  #  apk del tzdata && \
-   # rm -rf /var/cache/apk/*
+RUN apk --update add tzdata && \
+    cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && \
+    echo "Asia/Shanghai" > /etc/timezone && \
+    apk del tzdata && \
+    rm -rf /var/cache/apk/*
 
 # Copy the source code. Note the slash at the end, as explained in
-# 把全部文件添加到/app目录
-ADD . .
+# https://docs.docker.com/engine/reference/builder/#copy
+COPY *.go ./
 
-# 编译：把cmd/main.go编译成可执行的二进制文件，命名为app
-RUN GOOS=linux CGO_ENABLED=0 GOARCH=amd64 go build -ldflags="-s -w" -installsuffix cgo -o docker-gs-ping main.go
-
-# 运行：使用scratch作为基础镜像
-FROM scratch as prod
-
-# 在build阶段复制时区到
-# COPY --from=build /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
-# 在build阶段复制可执行的go二进制文件app
-COPY --from=build /app/docker-gs-ping /
+# Build
+RUN go build -o /docker-gs-ping
 
 # This is for documentation purposes only.
 # To actually open the port, runtime parameters
@@ -45,4 +40,4 @@ EXPOSE 8080
 #ENV HTTP_PORT=8081
 
 # Run
-CMD [ "/docker-gs-ping" ]
+ENTRYPOINT [ "/docker-gs-ping" ]
