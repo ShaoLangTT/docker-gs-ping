@@ -15,6 +15,11 @@ services: # 一个services 下面包含多个项目服务
       - mynet
     ports:
       - 8080:8080
+    logging:
+      driver: json-file    # 容器的日志: /var/lib/docker/containers/$containerId/
+      options:
+        max-size: "20M" # 单个文件大小为20M,超过了会创建新的文件
+        max-file: "10" # 最多10个文件,当达到文件限制上限，会自动删除旧的文件。
     deploy: # 重新启动策略
       restart_policy:
         condition: on-failure # on-failure 在容器非正常退出时（退出状态非0），才会重启容器
