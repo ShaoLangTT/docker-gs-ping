@@ -32,7 +32,7 @@ func main() {
 		m := make([]map[string]interface{}, 0)
 		db.Table("bg_user").Where("user_id= ?", "admin").Find(&m)
 		fmt.Println("user:", m)
-		fmt.Println("我是admin")
+		fmt.Println("我是admin22222222222222222")
 		defer db.Close()
 		return c.HTML(http.StatusOK, pgConnString+"Hello, Docker! <3")
 	})
