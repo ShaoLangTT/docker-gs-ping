@@ -38,7 +38,7 @@ services: # 一个services 下面包含多个项目服务
       - POSTGRES_PASSWORD=123456
       - POSTGRES_DB=test
     volumes:
-      - roach:/var/lib/postgresql/data   # 已经存在的命名的数据卷。
+      - roach:/var/lib/postgresql/data   # 已经存在的命名的数据卷。 /var/lib/postgresql/data 为容器内数据存储地址
      # command: start-single-node  # 覆盖容器启动后默认执行的命令
 
 volumes:  # 数据卷
