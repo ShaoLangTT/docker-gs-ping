@@ -30,7 +30,7 @@ func main() {
 			return c.HTML(http.StatusOK, pgConnString+":"+err.Error())
 		}
 		m := make([]map[string]interface{}, 0)
-		db.Table("bg_user").Where("user_id= ?", "admin").Find(&m)
+		db.Table("user").Where("id= ?", 1).Find(&m)
 		fmt.Println("user:", m)
 		fmt.Println("我是admin22222222222222222")
 		defer db.Close()
