@@ -33,8 +33,10 @@ func main() {
 		if err = db.Table("user").Where("id= ?", 1).Find(&m); err != nil {
 			fmt.Println("Find err:", err)
 		}
+
+		fmt.Println("Find not err:", err)
 		fmt.Println("user:", m)
-		fmt.Println("我是admin22222222222222222")
+		fmt.Println("我是admin333333333")
 		defer db.Close()
 		return c.HTML(http.StatusOK, pgConnString+"Hello, Docker! <3")
 	})
@@ -68,6 +70,7 @@ func initStore() (*xorm.Engine, string, error) {
 		return nil, pgConnString, err
 	}
 	setDB(engine)
+	engine.ShowSQL(true)
 	if err := engine.Ping(); err != nil {
 		fmt.Println("Ping err:", err)
 		return nil, pgConnString, err
