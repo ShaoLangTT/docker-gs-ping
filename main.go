@@ -30,7 +30,9 @@ func main() {
 			return c.HTML(http.StatusOK, pgConnString+":"+err.Error())
 		}
 		m := make([]map[string]interface{}, 0)
-		db.Table("user").Where("id= ?", 1).Find(&m)
+		if err = db.Table("user").Where("id= ?", 1).Find(&m); err != nil {
+			fmt.Println("Find err:", err)
+		}
 		fmt.Println("user:", m)
 		fmt.Println("我是admin22222222222222222")
 		defer db.Close()
@@ -58,8 +60,8 @@ func initStore() (*xorm.Engine, string, error) {
 		os.Getenv("PGPASSWORD"),
 	)
 	fmt.Println("pgConnString:", pgConnString)
-	/*	pgConnString := fmt.Sprintf("host=%s port=%s dbname=%s user=%s password=%s sslmode=disable", "124.223.101.122",
-		"5432", "postgres", "postgres", "123456")*/
+	/*pgConnString = fmt.Sprintf("host=%s port=%s dbname=%s user=%s password=%s sslmode=disable", "124.223.101.122",
+	"5432", "test", "root", "sl6387570506")*/
 	engine, err := xorm.NewEngine("postgres", pgConnString)
 	if err != nil {
 		fmt.Println("NewEngine err:", err)
