@@ -33,7 +33,7 @@ func main() {
 		if err = db.Table("user").Where("id= ?", 1).Find(&m); err != nil {
 			fmt.Println("Find err:", err)
 		}
-
+		fmt.Println("测试 ci/cd 流程")
 		fmt.Println("Find not err:", err)
 		fmt.Println("user:", m)
 		fmt.Println("我是admin333333333")
