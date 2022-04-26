@@ -11,7 +11,6 @@ jobs:
   release:
     runs-on: ubuntu-latest
     steps:
-       # 拷贝dockerfile
       - name: Run Crrpath
         run: ls
       - name: Copy dev.Dockerfile  # 拷贝Dockerfile到发布目录 ##生成随机数 echo "$RANDOM"|md5sum|cut -c 5-15
