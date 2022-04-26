@@ -2,9 +2,9 @@ name: Release to Docker Hub
 
 on:
   push:
-     branches: [ dev/main ]
+     branches: [ main ]
   pull_request:
-     branches: [dev/main]
+     branches: [main]
 env:
   IMAGE_NAME: registry.cn-hangzhou.aliyuncs.com/suktcore/sukt-core-admin-api #
   IMAGE_TAG: dev
