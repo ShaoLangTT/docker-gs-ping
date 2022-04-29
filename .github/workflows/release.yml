@@ -25,13 +25,7 @@ jobs:
 
       - name: Checkout code
         uses: actions/checkout@v2
-
-      - name: Fetch required Go modules
-        run:  go mod download
-
-      - name: Build
-        run:  go build -v ./...
-
+        
       - name: Build and push Docker image
         id:   docker_build
         uses: docker/build-push-action@v2
