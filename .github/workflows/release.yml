@@ -6,7 +6,7 @@ on:
   pull_request:
      branches: [main]
 env:
-  IMAGE_TAG: v1.0.3
+  IMAGE_TAG: v1.0.4
 
 jobs:
   release:
@@ -34,6 +34,5 @@ jobs:
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/${{ github.event.repository.name }}:${{env.IMAGE_TAG}}
           context: .
           file: dev.Dockerfile
-
-      - name: Image digest
-        run: echo ${{ steps.docker_build.outputs.digest }}
+          cache-from: type=registry,ref=${{ secrets.DOCKER_HUB_USERNAME }}/${{ github.event.repository.name }}:buildcache
+          cache-to: type=registry,ref=${{ secrets.DOCKER_HUB_USERNAME }}/${{ github.event.repository.name }},mode=max
