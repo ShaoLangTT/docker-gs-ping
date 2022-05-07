@@ -37,8 +37,8 @@ jobs:
       - name: SSH
         uses: fifsky/ssh-action@master
         with:
-         command: |
-          sh start.sh
          host: ${{ secrets.HOST }}
          user: ${{ secrets.USER }}
          key: ${{ secrets.PRIVATE_KEY}}
+         copy: docker-compose_db.yml
+         run: docker-compose -f docker-compose_db.yml up -d
