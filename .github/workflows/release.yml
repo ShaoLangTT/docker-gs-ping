@@ -2,7 +2,7 @@ name: Release to Docker Hub
 
 on:
   push:
-     branches: [ dev ]
+     branches: [ main ]
 env:
   IMAGE_TAG: v1.0.4
 
@@ -32,3 +32,13 @@ jobs:
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/${{ github.event.repository.name }}:${{env.IMAGE_TAG}}
           context: .
           file: dev.Dockerfile
+          
+       # push后，用ssh连接服务器执行脚本
+      - name: SSH
+        uses: fifsky/ssh-action@master
+        with:
+         command: |
+          sh start.sh
+         host: ${{ secrets.HOST }}
+         user: ${{ secrets.USER }}
+         key: ${{ secrets.PRIVATE_KEY}}
